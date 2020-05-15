@@ -2,13 +2,9 @@ package com.instagram.clone.controller;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.nio.channels.SeekableByteChannel;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -20,7 +16,6 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,16 +28,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.instagram.clone.common.properties.ApplicationProperties;
 import com.instagram.clone.model.biz.channel.ChannelBiz;
-import com.instagram.clone.model.biz.channel.ChannelBizImpl;
 import com.instagram.clone.model.biz.feed.FeedBiz;
-import com.instagram.clone.model.biz.feed.FeedBizImpl;
 import com.instagram.clone.model.biz.member.MemberBiz;
 import com.instagram.clone.model.vo.FeedVo;
 import com.instagram.clone.model.vo.MemberVo;
 import com.instagram.clone.ssohandler.domain.entity.Member;
 import com.instagram.clone.ssohandler.service.MemberService;
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 @RestController
 @RequestMapping("/feed/*")
@@ -98,7 +89,7 @@ public class FeedController implements ApplicationProperties {
 		Map<String, String> map = new HashMap<String, String>();
 
 		return map;
-	}	
+	}
 
 	@GetMapping(value = "/insertpage")
 	public ModelAndView insertPage(HttpSession session, int member_code) {
@@ -128,9 +119,9 @@ public class FeedController implements ApplicationProperties {
 		String board_file_ext = board_file_server_name.substring(board_file_server_name.lastIndexOf(".") + 1);
 		try {
 			InputStream fileStream = multi.getInputStream();
-			FileUtils.copyInputStreamToFile(fileStream, targetFile);
+			 FileUtils.copyInputStreamToFile(fileStream, targetFile);
 		} catch (IOException e) {
-			FileUtils.deleteQuietly(targetFile);
+			 FileUtils.deleteQuietly(targetFile);
 			e.printStackTrace();
 		}
 		int member_code = vo.getMember_code();
